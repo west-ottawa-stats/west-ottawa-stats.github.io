@@ -136,6 +136,31 @@ body::before{content:'';position:fixed;top:0;right:0;bottom:0;left:0;background:
 .ri-into{background:#ffffff;color:#1c1c1c;border-radius:6px;padding:4px 8px;margin-bottom:6px;font-size:16px}
 .sb-lvl{display:inline-block;margin-left:4px;padding:0 4px;border-radius:4px;background:#ffffff;color:#1c1c1c;font-size:.72em;letter-spacing:.5px;vertical-align:1px}
 @media(max-width:600px){#teamBar{padding:4px;gap:4px;border-bottom-width:1px}#teamBar button{min-height:44px;font-size:17px;border-radius:8px}}
+
+/* ---- live-chrome (v1.0.8) ---- */
+#teamBar.hide{display:none!important}
+#tmoBtns.expMini{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
+#tmoBtns.expMini.hide{display:none!important}
+#tmoBtns.expMini .tmoTeam{min-height:48px;padding:4px 6px;font-weight:900;font-size:15px;line-height:1.1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid #ffffff;border-radius:10px;background:#2a2a2a;color:#fff}
+#tmoBtns.expMini .tmoTeam.opp{border-color:#cfd6e4;background:#3d3d3d}
+#tmoBtns.expMini .tmoTeam .tt{font-size:12px;letter-spacing:.4px}
+#tmoBtns.expMini .tmoTeam small{font-size:12px;font-weight:800;opacity:.95;margin-top:3px;font-variant-numeric:tabular-nums}
+#tmoBtns.expMini .tmoTeam.last{box-shadow:0 0 0 2px #ff5a5f inset}
+#tmoBtns.expMini .tmoTeam.none{opacity:.42;border-style:dashed}
+#mode.hide{display:none!important}
+#toolbar.liveRun{display:grid;grid-template-columns:2.25fr 1fr 1fr;gap:4px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.35)}
+@media(max-width:600px){#tmoBtns.expMini{gap:4px;margin-bottom:4px}#tmoBtns.expMini .tmoTeam{min-height:40px;font-size:13px;border-width:1px;border-radius:8px}#tmoBtns.expMini .tmoTeam .tt{font-size:10px}#tmoBtns.expMini .tmoTeam small{font-size:11px;margin-top:2px}}
+#tmoModal{position:fixed;top:0;right:0;bottom:0;left:0;z-index:68;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;padding:12px;touch-action:manipulation}
+#tmoCard{background:#1c1c1c;border:4px solid #ffffff;border-radius:16px;padding:14px;width:min(440px,100%);box-shadow:0 8px 28px rgba(0,0,0,.65);text-align:center}
+#tmoCard.opp{border-color:#cfd6e4}
+#tmoTitle{font-size:22px;font-weight:900;color:#fff;margin:0 0 4px}
+#tmoSub{font-size:14px;opacity:.9;margin:0 0 12px;color:#fff}
+#tmoPick{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+#tmoPick button{min-height:72px;font-size:22px;font-weight:900;display:flex;flex-direction:column;align-items:center;justify-content:center;border:3px solid #ffffff;border-radius:12px;background:#2a2a2a;color:#fff;padding:6px}
+#tmoPick button small{font-size:13px;font-weight:800;margin-top:4px;opacity:.95}
+#tmoPick button.none{opacity:.42;border-style:dashed;pointer-events:none}
+#tmoPickCancel{display:block;width:100%;min-height:48px;font-size:18px;font-weight:800;background:transparent;border:2px solid #ffffff;border-radius:10px;color:#fff;margin-top:2px}
+
 /* v2.2.1 scoreboard fit (2026-10-27): nothing on the scoreboard is cut off — columns may shrink, names wrap/shrink, no ellipsis */
 #scorebug{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}.sb-team{min-width:0}
 .sb-name,.sb-name.long{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;line-height:1.08;display:block;-webkit-line-clamp:unset}
@@ -256,7 +281,7 @@ try{var s=real(),pk='__wo_bb_probe__';s.setItem(pk,'1');if(s.getItem(pk)!=='1')t
 <div class="sb-team opp"><div class="sb-name" id="sbOppName">OPP</div><div class="sb-score" id="sbThem">0</div><div class="sb-fouls" id="sbOppFouls">&nbsp;</div><div class="sb-tmo" id="sbTmoOpp"></div></div></div>
 <div id="oppLine"></div><!-- v2.1: opponent stat line + rebound battle sits right under the scoreboard -->
 <div id="oppBtns"><span class="ol">OPPONENT</span><button class="r" id="oppFgMake">OPP FG MAKE</button><button id="oppFgMiss">OPP FG MISS</button><button data-oppk="oppto" id="oppToBtn">OPP TO</button></div>
-<div id="tmoBtns"><div class="tg us"><div class="tc">WEST OTTAWA TIMEOUT</div><div class="tb"><button data-tmo="us:60">Full<small id="tmoUs60">3 left</small></button><button data-tmo="us:30">30s<small id="tmoUs30">2 left</small></button></div></div><div class="tg opp"><div class="tc">OPPONENT TIMEOUT</div><div class="tb"><button data-tmo="opp:60">Full<small id="tmoOpp60">3 left</small></button><button data-tmo="opp:30">30s<small id="tmoOpp30">2 left</small></button></div></div></div>
+<div id="tmoBtns" class="expMini"><button type="button" class="tmoTeam us" id="tmoUsBtn" data-tmo-team="us" aria-label="West Ottawa timeout"><span class="tt">WO TIMEOUT</span><small id="tmoUsSum">Full 3 · 30s 2</small></button><button type="button" class="tmoTeam opp" id="tmoOppBtn" data-tmo-team="opp" aria-label="Opponent timeout"><span class="tt">OPP TIMEOUT</span><small id="tmoOppSum">Full 3 · 30s 2</small></button></div>
 <div id="toolbar"><button id="clockBtn" class="g" aria-label="Start/Stop Clock"><span class="ci">▶</span><span class="ct"><span class="cl">Start/Stop Clock</span><small id="clockState">STOPPED</small></span></button><button id="mode" title="Subs — who's coming out / who's going in">Subs</button><button id="undo" class="y">↶ Undo</button><button id="toolsBtn">Tools ▾</button></div>
 <div id="clockTools" class="closed"><div class="trow" id="perBtns"></div>
 <div class="trow"><b>Clock:</b><button data-adj="-10">-10s</button><button data-adj="-1">-1s</button><button data-adj="1">+1s</button><button data-adj="10">+10s</button><button id="setClock" class="b">Set Time</button></div>
@@ -297,7 +322,7 @@ try{var s=real(),pk='__wo_bb_probe__';s.setItem(pk,'1');if(s.getItem(pk)!=='1')t
 <div id="stModal" class="hide" role="dialog" aria-modal="true" aria-labelledby="stTitle"><div id="stCard"><div id="stTitle">Who's the Starting 5?</div><div id="stSub"></div><div id="stCount"></div><div id="stBody" class="ftList fsList"></div><button id="stGo" disabled>Start with these 5</button><div id="stLinks"><button id="stFew" class="ftLink">Start with fewer</button><button id="stSkip" class="ftLink hide">Skip — keep current lineup</button><button id="stCancel" class="ftLink" title="Don't start — back to New Game setup">Cancel</button></div></div></div>
 <div id="ftModal" class="hide" role="dialog" aria-modal="true" aria-labelledby="ftTitle"><div id="ftCard"><div id="ftTitle"></div><div id="ftSub"></div><div id="ftBody"></div><div id="ftLinks"><button id="ftUndo" class="ftLink">↶ Undo last FT</button><button id="ftCancel" class="ftLink">Done early / Cancel</button></div></div></div>
 <div id="fgModal" class="hide" role="dialog" aria-modal="true" aria-labelledby="fgTitle"><div id="fgCard"><div id="fgTitle"></div><div id="fgSub"></div><div id="fgBody"></div><div id="fgLinks"><button id="fgBack" class="ftLink">← 2 or 3</button><button id="fgCancel" class="ftLink">Cancel</button></div></div></div>
-<div id="ynModal" class="hide" role="alertdialog" aria-modal="true" aria-labelledby="ynQ"><div id="ynCard"><div id="ynQ"></div><div id="ynSub"></div><div id="ynBtns"><button id="ynYes">Yes</button><button id="ynNo">No</button></div></div></div><div id="nsModal" class="hide" role="alertdialog" aria-modal="true" aria-labelledby="nsQ1"><div id="nsCard"><div id="nsStep1"><div class="nsQ" id="nsQ1">Start a new season?</div><div class="nsSub" id="nsSub1"></div><div class="nsOpts"><button id="nsKeep" class="nsOpt on" aria-pressed="true">Keep roster<small>Players stay · inactive players stay inactive</small></button><button id="nsClear" class="nsOpt" aria-pressed="false">Clear roster too<small>Start with an empty roster</small></button></div><div class="nsNote">📥 You can import the new NFHS roster afterward (Roster tab → Import Roster).</div><div class="nsBtns"><button id="nsNext" class="nsWarn">Continue</button><button id="nsCancel1" class="nsSafe">Cancel</button></div></div><div id="nsStep2" class="hide"><div class="nsQ">Are you sure?</div><div class="nsSub" id="nsSub2"></div><label class="nsLbl" for="nsType">Type <b>NEW SEASON</b> to confirm</label><input id="nsType" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="NEW SEASON"><div class="nsBtns"><button id="nsGo" class="nsDanger" disabled>Save backup &amp; start</button><button id="nsCancel2" class="nsSafe">Cancel</button></div></div></div></div><div id="toast" class="hide" role="status" aria-live="polite"></div>
+<div id="tmoModal" class="hide" role="dialog" aria-modal="true" aria-labelledby="tmoTitle"><div id="tmoCard"><div id="tmoTitle">Timeout</div><div id="tmoSub">Full or 30-second?</div><div id="tmoPick"><button type="button" id="tmoPick60" data-tmo-len="60">Full<small id="tmoPick60n">3 left</small></button><button type="button" id="tmoPick30" data-tmo-len="30">30s<small id="tmoPick30n">2 left</small></button></div><button type="button" id="tmoPickCancel">Cancel</button></div></div><div id="ynModal" class="hide" role="alertdialog" aria-modal="true" aria-labelledby="ynQ"><div id="ynCard"><div id="ynQ"></div><div id="ynSub"></div><div id="ynBtns"><button id="ynYes">Yes</button><button id="ynNo">No</button></div></div></div><div id="nsModal" class="hide" role="alertdialog" aria-modal="true" aria-labelledby="nsQ1"><div id="nsCard"><div id="nsStep1"><div class="nsQ" id="nsQ1">Start a new season?</div><div class="nsSub" id="nsSub1"></div><div class="nsOpts"><button id="nsKeep" class="nsOpt on" aria-pressed="true">Keep roster<small>Players stay · inactive players stay inactive</small></button><button id="nsClear" class="nsOpt" aria-pressed="false">Clear roster too<small>Start with an empty roster</small></button></div><div class="nsNote">📥 You can import the new NFHS roster afterward (Roster tab → Import Roster).</div><div class="nsBtns"><button id="nsNext" class="nsWarn">Continue</button><button id="nsCancel1" class="nsSafe">Cancel</button></div></div><div id="nsStep2" class="hide"><div class="nsQ">Are you sure?</div><div class="nsSub" id="nsSub2"></div><label class="nsLbl" for="nsType">Type <b>NEW SEASON</b> to confirm</label><input id="nsType" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="NEW SEASON"><div class="nsBtns"><button id="nsGo" class="nsDanger" disabled>Save backup &amp; start</button><button id="nsCancel2" class="nsSafe">Cancel</button></div></div></div></div><div id="toast" class="hide" role="status" aria-live="polite"></div>
 <div id="ltoModal" class="hide" role="alertdialog" aria-label="Last timeout remaining"><div id="ltoCard"><div id="ltoTitle">⚠️ Last timeout remaining</div><div id="ltoType"></div><div id="ltoSub"></div><button id="ltoOk" class="g">Got it</button><div id="ltoBar"><i></i></div></div></div>
 <div id="toModal" class="hide" role="dialog" aria-label="Turnover: stop the clock?"><div id="toCard"><div id="toTitle">Turnover — stop the clock?</div><div id="toSub"></div><div id="toBtns"><button id="toStop">⏸ Stop clock<small>dead ball · out of bounds, travel</small></button><button id="toKeep">▶ Keep running<small>live ball · steal</small></button></div><div id="toBar"><i></i></div></div></div>
 <div id="stlModal" class="hide" role="dialog" aria-label="Who got the steal?" style="position:fixed;top:0;right:0;bottom:0;left:0;z-index:55;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;padding:12px">
@@ -741,7 +766,7 @@ const STATS=[['2PT Make','fg2m','g'],['2PT Miss','fg2x','r'],['3PT Make','fg3m',
 const load=(k,d)=>{try{return JSON.parse(LS.getItem(k))??d}catch(e){return d}};
 const BOOL_SET=['askAst','askZone','req5','ftStop','foulPause','askReb'];
 function normSettings(o){o=o&&typeof o==='object'&&!Array.isArray(o)?o:{};if(!(o.qLen>0))o.qLen=480;if(!(o.otLen>0))o.otLen=240;BOOL_SET.forEach(k=>{const v=o[k];o[k]=!(v===false||v==='false'||v===0||v==='0'||v==='off')});return o}
-const APP_VERSION='v1.0.7',APP_BUILD=APP_VERSION+' · 2026-11-06 · arena-clock';
+const APP_VERSION='v1.0.8',APP_BUILD=APP_VERSION+' · 2026-11-06 · live-chrome';
 // ---- v2.2 teams: Varsity / JV / Freshman. Each team has its own storage slot: wo_bb_roster_<id>, wo_bb_game_<id>, wo_bb_past_<id>, wo_bb_settings_<id>, wo_bb_keeper_<id>;
 // wo_bb_team = last selected team. Migration (once, idempotent): the old unsuffixed v2.1 keys are COPIED to the Varsity slot and verified; the old keys are left untouched as a backup and never written again.
 const TEAMS=[['varsity','Varsity'],['jv','JV'],['freshman','Freshman']],TEAM_IDS=TEAMS.map(t=>t[0]),TEAM_KEYS=['wo_bb_roster','wo_bb_game','wo_bb_past','wo_bb_settings','wo_bb_keeper'],TEAM_SEL='wo_bb_team',TEAM_MIG='wo_bb_teams_migrated';
@@ -799,7 +824,7 @@ function need5(){return settings.req5!==false}
 function alertMsg(t){msg(t);const m=$('msg');m.classList.remove('alert');void m.offsetWidth;m.classList.add('alert');clearTimeout(alertMsg.t);alertMsg.t=setTimeout(()=>m.classList.remove('alert'),4000)}
 function stopIfShort(){if(!game||!game.running||!need5())return false;const n=onCourtN();if(n>=5)return false;tick();if(!game.running)return false;game.running=false;clearInterval(timer);save();return n}
 function setRun(r){if(!r)closeToPrompt();if(!r&&game&&game.running&&!setRun._t){setRun._t=1;try{tick()}catch(e){console.error(e)}finally{setRun._t=0}if(!game.running)return} // credit time since the last 100 ms tick before stopping
- if(r&&game.remain<=0){msg('Clock is at 0:00 — pick the next period');r=false}if(r&&need5()&&onCourtN()!==5){const n=onCourtN();alertMsg(`⛔ Need 5 on court to start the clock (${n} of 5) — tap Subs`);r=false;if(!game.running){render();return}}game.running=r;if(r&&game.period===1&&Array.isArray(game.subLog)&&!game.starters)game.starters=game.players.filter(p=>p.court).map(p=>p.id);clearInterval(timer);if(r){last=Date.now();timer=setInterval(tick,100)}save();render()}
+ if(r&&game.remain<=0){msg('Clock is at 0:00 — pick the next period');r=false}if(r&&need5()&&onCourtN()!==5){const n=onCourtN();alertMsg(`⛔ Need 5 on court to start the clock (${n} of 5) — tap Subs`);r=false;if(!game.running){render();return}}if(r){try{if(typeof closeTmoPick==='function')closeTmoPick()}catch(e){}try{if(typeof msSeq!=='undefined'&&msSeq&&typeof msClose==='function')msClose()}catch(e){}}game.running=r;if(r&&game.period===1&&Array.isArray(game.subLog)&&!game.starters)game.starters=game.players.filter(p=>p.court).map(p=>p.id);clearInterval(timer);if(r){last=Date.now();timer=setInterval(tick,100)}save();render()}
 function endPeriod(){closeToPrompt();if(msSeq)msDone(); /* subs picked before the buzzer count at 0:00 */const n=game.period,nx=n+1;render();periodAsk(game,n,()=>{if(!game)return render();
  if(n>=4){const them=oppCum(game)[n],us=usThrough(game,n); // 2026-10-22: overtime only when tied; unknown opponent score -> still ask
   if(them!=null&&them!==us){render();alertMsg(`End of ${n===4?'regulation':pLbl(n)} — final: West Ottawa ${us}, ${game.opp} ${them}. Tap End & Save Game.`);return}}
@@ -1034,12 +1059,12 @@ function p2Prims(M){const B=-5.25,H=41.75,R=19.75,P=[],arc=(cx,cy,r,a1,a2,n=48)=
  ln([[-3,-1.25],[3,-1.25]],3.2);ln([[0,-1.25],[0,-.75]]);ln(arc(0,0,.75,0,360,24),1.6*1.4,{c:SBC.goldD,closed:1});
  ln(arc(0,H,6,180,360));ln(arc(0,H,2,180,360));
  const mk=M.located.filter(s=>!s.m).concat(M.located.filter(s=>s.m));
- mk.forEach(s=>P.push(s.m?{k:'dot',x:s.spot.x,y:s.spot.y,r:4.75,fill:s.v===3?SBC.gold:SBC.mid,c:s.v===3?SBC.blue:SBC.ink,lw:s.v===3?1.1:.6,type:`fg${s.v}m`}:{k:'dot',x:s.spot.x,y:s.spot.y,r:4.5,fill:[255,255,255],c:s.v===3?SBC.goldD:SBC.mid,lw:1.8,type:`fg${s.v}x`}));
+ mk.forEach(s=>P.push(s.m?{k:'dot',x:s.spot.x,y:s.spot.y,r:4.75,fill:SBC.ink,c:SBC.ink,lw:.6,type:`fg${s.v}m`}:{k:'dot',x:s.spot.x,y:s.spot.y,r:4.75,fill:[255,255,255],c:SBC.ink,lw:1.8,type:`fg${s.v}x`}));
  M.labels.forEach(l=>P.push(Object.assign({k:'label'},l)));return P}
 // zone shading: tier color + opacity over the cream floor (hot green, warm gold, cold blue, grey washed = no attempts)
 var P2_ZFILL={hot:{c:[34,160,80],op:.30},warm:{c:[250,200,20],op:.36},cold:{c:[60,110,200],op:.24},none:{c:[200,204,212],op:.30}},P2_ZLINE=[112,124,146];
 function p2Swatch(t){const Z=P2_ZFILL[t];return Z.c.map((v,i)=>Math.round(v*Z.op+[255,253,245][i]*(1-Z.op)))}
-var P2_LEG=[['2PT make',{fill:SBC.mid,c:SBC.ink,lw:.6}],['2PT miss',{fill:[255,255,255],c:SBC.mid,lw:1.8}],['3PT make',{fill:SBC.gold,c:SBC.blue,lw:1.1}],['3PT miss',{fill:[255,255,255],c:SBC.goldD,lw:1.8}]];
+var P2_LEG=[['Make',{fill:SBC.ink,c:SBC.ink,lw:.6}],['Miss',{fill:[255,255,255],c:SBC.ink,lw:1.8}]];
 // v2.2.10: pages 2/3 (and player shot charts) header logos match page 1: the WO block straight on the navy (no white badge) on the left,
 // the West Ottawa WO logo on the right (page-1 proportions scaled to the 61.9 pt band). TEST DATA badge sits just left of the WO logo.
 function pdfBandLogos(doc,test,sub){
@@ -1081,7 +1106,7 @@ function pdfPage2(doc,g,half,O={}){const M=O.M||p2Model(g,half),test=O.test!=nul
    if(q.pct){doc.setFont('helvetica','normal');doc.setFontSize(7);doc.text(q.pct,cx,cy+6.9,{align:'center'})}labs[q.z]=q.text}});
  // legend + grading key + notes
  let ly=Y(41.75)+18;doc.setFont('helvetica','normal');doc.setFontSize(9);
- {const items=P2_LEG.map(([t,o])=>({t,o,w:8+2.7+doc.getTextWidth(t)})),gap=10.8,tot=items.reduce((a,b)=>a+b.w,0)+gap*3;let x=306-tot/2;
+ {const items=P2_LEG.map(([t,o])=>({t,o,w:8+2.7+doc.getTextWidth(t)})),gap=10.8,tot=items.reduce((a,b)=>a+b.w,0)+gap*Math.max(0,items.length-1);let x=306-tot/2;
   items.forEach(it=>{dot(x+4,ly-3.2,4,it.o);doc.setTextColor(...SBC.ink);doc.text(it.t,x+10.7,ly);x+=it.w+gap})}
  ly+=13;doc.setFontSize(7);{const parts=['hot','warm','cold','none'].map(t=>({t,txt:P2_TIER_TXT[t]})),pre='Zone shading / box border (makes/attempts, FG%): ',w=doc.getTextWidth(pre)+parts.reduce((a,p)=>a+11+doc.getTextWidth(p.txt)+9,0);let x=306-w/2;
   doc.setTextColor(...SBC.gray);doc.text(pre,x,ly);x+=doc.getTextWidth(pre);parts.forEach(p=>{const T=P2_TIER[p.t];doc.setFillColor(...p2Swatch(p.t));doc.setDrawColor(...T.ec);doc.setLineWidth(1.1);doc.roundedRect(x,ly-6,8,7,1.5,1.5,'FD');doc.setTextColor(...SBC.gray);doc.text(p.txt,x+11,ly);x+=11+doc.getTextWidth(p.txt)+9})}
@@ -1788,7 +1813,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&msSeq&&!ftSeq&&!tsS
 $('ftModal').addEventListener('click',e=>{if(e.target===$('ftModal')&&msSeq&&!ftSeq&&!tsSeq){msClose();msg('Subs cancelled — no changes')}});
 // ---- v2.1 field goals: FG Make / FG Miss -> 2 PT or 3 PT? -> [West Ottawa: who? (on-court) -> the record() path: spot -> assist (make) / rebound (miss)]
 // Opponent: OPP FG MAKE / OPP FG MISS -> 2 or 3 -> the old OPP +2/+3 (Assisted?) or MISS 2/3 (rebound) paths. Logged events are identical to the old buttons.
-var fgSeq=null;const FG_BLOCK=['moreModal','stModal','ftModal','ynModal','zoneModal','astModal','rebModal','stlModal','ltoModal','toModal','htModal','nsModal','repModal','pcModal','rimpModal'];
+var fgSeq=null;const FG_BLOCK=['moreModal','stModal','ftModal','ynModal','tmoModal','zoneModal','astModal','rebModal','stlModal','ltoModal','toModal','htModal','nsModal','repModal','pcModal','rimpModal'];
 function fgStart(team,make,kind){if(!game){msg('Start a game first');return}if(fgSeq||ftSeq||FG_BLOCK.some(id=>$(id)&&!$(id).classList.contains('hide')))return; // prompts never stack
  if(team==='us'&&courtMode){msg('Switch Mode back to Stats to record stats');return}
  if(team==='us'&&!game.players.some(p=>p.court)){msg('No players on court — sub them in first');return}
@@ -2159,18 +2184,27 @@ function teamFoulsQtr(g,period){const fq=foulQ(period||g.period||1);let f=0;g.pl
 function fitBug(){['sbUs','sbThem'].forEach(id=>$(id).classList.toggle('d3',$(id).textContent.trim().length>2))} /* v2.2.1: 3-digit scores a bit smaller so they never get cut off */
 function renderBug(){if(!game)return;$('sbUs').textContent=pts(totals(game));$('sbThem').textContent=oppLatest(game)??0;$('sbOppName').textContent=game.opp;$('sbOppName').title=game.opp;$('sbOppName').classList.toggle('long',game.opp.length>14);$('sbOppName').classList.toggle('xlong',game.opp.length>24);fitBug();
  {const n=teamFoulsQtr(game),o=oppFoulTracked(game)?oppQtrFouls(game):0;$('sbFouls').innerHTML=`<span class="tf">TEAM </span><span class="nw">FOULS ${n}</span>`+(bonusOf(o)?`<span class="bon" title="West Ottawa in the bonus (2 shots) — ${esc(game.opp)} has ${o} team fouls this quarter">BONUS</span>`:'')}renderTmo();renderOppLine()}
-function renderMini(){if(!game)return;const evs=game.log.slice(-4).reverse();
+function renderMini(){if(!game)return;const evs=game.log.slice(-3).reverse();
  $('miniList').innerHTML=evs.length?evs.map(e=>{const p=game.players.find(p=>p.id===e.id);return`<div class="mini"><span class="when">${e.q!=null?pLbl(e.q):'—'} ${e.t!=null?fmtClock(e.t):'—'}</span><span class="w">${e.tmo?esc(tmoTeam(game,e.team)):e.opp?esc(game.opp):p?`#${esc(p.num)} ${esc(p.name)}`:'(removed)'} — <b>${evLabel(game,e)}</b></span><button class="r" data-mrm="${e.eid}" title="Remove">✕</button></div>`}).join(''):'<div class="mini"><i>No plays yet</i></div>';
  $('miniList').querySelectorAll('[data-mrm]').forEach(b=>b.onclick=()=>{const e=game.log.find(x=>x.eid===b.dataset.mrm);if(!e)return;yesNo(`Remove ${evTxt(e)} (${e.q!=null?pLbl(e.q):'—'} ${e.t!=null?fmtClock(e.t):'—'})?`,{danger:1},()=>{if(!game)return;removeEv(game,e.eid);msg('Removed '+evTxt(e));save();render()})})}
 $('lineupGo').onclick=()=>msOpen();
 let benchOpen=false;$('benchBtn').onclick=()=>{benchOpen=!benchOpen;renderPlayers()};
 $('toolsBtn').onclick=()=>{const c=$('clockTools').classList.toggle('closed');$('toolsBtn').textContent=c?'Tools ▾':'Tools ▴'};
 $('viewAll').onclick=e=>{e.preventDefault();pbpG='cur';pbpP='all';pbpQf='all';document.querySelector('header button[data-tab="pbp"]').click()};
+
+// ---- live-chrome: hide team picker during a game; hide Subs + timeouts while clock runs ----
+function updateLiveChrome(){const active=!!game,run=!!(game&&game.running);
+  const tb=$('teamBar');if(tb)tb.classList.toggle('hide',active);
+  const tmo=$('tmoBtns');if(tmo)tmo.classList.toggle('hide',!active||run);
+  const mode=$('mode');if(mode)mode.classList.toggle('hide',!active||run);
+  const bar=$('toolbar');if(bar)bar.classList.toggle('liveRun',active&&run);
+}
 function render(){renderTeam();recheckFoulBanner();renderSeason();renderPbp();renderMini();renderRoster();renderPast();renderBox();$('newGame').classList.toggle('hide',!!game);$('live').classList.toggle('hide',!game);
  if(game){$('title').textContent=`vs ${game.opp} — ${fmtDate(game.date)}${game.test?' (TEST)':''}`;{const st=stopIfShort();if(st!==false)alertMsg(`⏸ Clock stopped — only ${st} on court`)}renderBug();{const n=onCourtN(),oc=$('onCourt');oc.textContent=`ON COURT ${n}/5`;oc.classList.toggle('ok',n===5);oc.hidden=n===5;oc.parentNode.classList.toggle('ocShow',n!==5);oc.title=n===5?'5 on court':need5()?'Need 5 on court to run the clock':'Shorthanded allowed (setting)'}setClockFace(fmtClock(game.remain));$('period').textContent=pLbl(game.period);renderPerBtns();$('htBtn').classList.toggle('hide',!(game.period>=3||(game.period===2&&game.remain<=0)));$('htSbBtn').classList.toggle('hide',!(game.period>=3||(game.period===2&&game.remain<=0)));$('clockBtn').querySelector('.ci').textContent=game.running?'⏸':'▶';$('clockState').textContent=game.running?'CLOCK RUNNING':'CLOCK STOPPED';$('clockBtn').title=game.running?'Clock running — tap to stop':'Clock stopped — tap to start';$('clockBtn').className=game.running?'r':'g';
   {const kl=$('keeperLive');if(kl&&document.activeElement!==kl)kl.value=keeperOf(game)}
   $('mode').textContent='Subs';$('mode').classList.toggle('on',!!msSeq);
-  const p=game.players.find(p=>p.id===sel);if(p&&!p.court&&!courtMode)sel=null;$('lineupMsg').classList.toggle('hide',game.players.some(x=>x.court));$('selName').textContent=p&&sel?`Selected: #${p.num} ${p.name}`:'No player selected';renderPlayers()}}
+  const p=game.players.find(p=>p.id===sel);if(p&&!p.court&&!courtMode)sel=null;$('lineupMsg').classList.toggle('hide',game.players.some(x=>x.court));$('selName').textContent=p&&sel?`Selected: #${p.num} ${p.name}`:'No player selected';renderPlayers()}
+ updateLiveChrome()}
 // ---- season ----
 let sView='tot',sSort={k:'PTS',d:-1};
 const keyOf=p=>p.id?'id:'+p.id:'nn:'+p.num+'|'+p.name;
@@ -2447,10 +2481,21 @@ $('ltoOk').onclick=e=>{e.stopPropagation();closeLto()};$('ltoModal').onclick=e=>
 function editTmo(g,eid,team,len){const e=(g.log||[]).find(x=>x.eid===eid&&x.tmo);if(!e)return'Timeout not found';team=team==='opp'?'opp':'us';len=+len===30?30:60;if(e.team===team&&e.len===len)return null;
  const S=tmoSummary(g,team),cur=(e.team===team&&e.len===len)?1:0;if((len===30?S.left30:S.left60)+cur<=0)return tmoBlockMsg(g,team,len).replace('⛔ ','');e.team=team;e.len=len;return null}
 function renderTmo(){if(!game)return;['us','opp'].forEach(t=>{const S=tmoSummary(game,t),K=t==='us'?'Us':'Opp',el=$('sbTmo'+K);
-  const last=S.left===1;{const tg=document.querySelector('.tg.'+t);if(tg){tg.classList.toggle('last',last);const tc=tg.querySelector('.tc');if(tc)tc.innerHTML=(t==='us'?'WEST OTTAWA TIMEOUT':'OPPONENT TIMEOUT')+(last?` <span class="lto${t==='us'?'':' sub'}">LAST TO</span>`:'')}}
-  if(el){el.innerHTML=`${last?`<span class="lto${t==='us'?'':' sub'}">LAST TO</span>`:'<span class="nw">T/O LEFT</span>'} <span class="nw">Full <b class="${S.left60?'':'z'}">${S.left60}</b></span> <span class="nw">· 30s <b class="${S.left30?'':'z'}">${S.left30}</b></span>`;el.title=`${tmoTeam(game,t)} timeouts: ${S.used} used of ${S.allowed} — full ${S.u60}/${S.a60}, 30-sec ${S.u30}/${S.a30}`}
-  [[60,S.left60],[30,S.left30]].forEach(([len,l])=>{const s=$('tmo'+K+len);if(s){s.textContent=l?`${l} left`:'none left';s.parentNode.classList.toggle('none',!l)}})})}
-document.querySelectorAll('[data-tmo]').forEach(b=>b.onclick=()=>{const[t,l]=b.dataset.tmo.split(':');callTimeout(t,+l)});
+  const last=S.left===1;const btn=$(t==='us'?'tmoUsBtn':'tmoOppBtn');if(btn){btn.classList.toggle('last',last);btn.classList.toggle('none',S.left<=0);const sum=$('tmo'+K+'Sum');if(sum)sum.textContent=(last?'LAST · ':'')+`Full ${S.left60} · 30s ${S.left30}`;btn.title=`${tmoTeam(game,t)} timeouts: ${S.used} used of ${S.allowed} — full ${S.u60}/${S.a60}, 30-sec ${S.u30}/${S.a30}`;btn.setAttribute('aria-label',`${t==='us'?'West Ottawa':'Opponent'} timeout — Full ${S.left60}, 30s ${S.left30}`)}
+  if(el){el.innerHTML=`${last?`<span class="lto${t==='us'?'':' sub'}">LAST TO</span>`:'<span class="nw">T/O LEFT</span>'} <span class="nw">Full <b class="${S.left60?'':'z'}">${S.left60}</b></span> <span class="nw">· 30s <b class="${S.left30?'':'z'}">${S.left30}</b></span>`;el.title=`${tmoTeam(game,t)} timeouts: ${S.used} used of ${S.allowed} — full ${S.u60}/${S.a60}, 30-sec ${S.u30}/${S.a30}`}})}
+var tmoPickTeam=null;
+function closeTmoPick(){tmoPickTeam=null;const m=$('tmoModal');if(m)m.classList.add('hide')}
+function openTmoPick(team){if(!game||game.running)return;team=team==='opp'?'opp':'us';const S=tmoSummary(game,team);tmoPickTeam=team;$('tmoCard').classList.toggle('opp',team==='opp');$('tmoTitle').textContent=team==='us'?'West Ottawa timeout':`${game.opp||'Opponent'} timeout`;
+ $('tmoSub').textContent=S.left?`Full ${S.left60} left · 30s ${S.left30} left — tap one`:(team==='us'?'No timeouts left — recording another is a technical foul':'No timeouts left');
+ const setOpt=(id,nid,left)=>{const b=$(id),n=$(nid);if(!b)return;if(team==='us'&&S.left<=0){n.textContent='extra (T)';b.classList.remove('none')}else{n.textContent=left?`${left} left`:'none left';b.classList.toggle('none',left<=0)}};
+ setOpt('tmoPick60','tmoPick60n',S.left60);setOpt('tmoPick30','tmoPick30n',S.left30);
+ $('tmoModal').classList.remove('hide')}
+document.querySelectorAll('[data-tmo-team]').forEach(b=>b.onclick=()=>openTmoPick(b.dataset.tmoTeam));
+$('tmoPick60').onclick=()=>{const t=tmoPickTeam;if(!t)return;closeTmoPick();callTimeout(t,60)};
+$('tmoPick30').onclick=()=>{const t=tmoPickTeam;if(!t)return;closeTmoPick();callTimeout(t,30)};
+$('tmoPickCancel').onclick=()=>closeTmoPick();
+$('tmoModal').addEventListener('click',e=>{if(e.target===$('tmoModal'))closeTmoPick()});
+document.addEventListener('keydown',e=>{if(tmoPickTeam&&e.key==='Escape'){e.preventDefault();closeTmoPick()}});
 {const r=document.getElementById('tmoNfhs');if(r)r.onclick=e=>{e.preventDefault();$('tmo60').value=TMO_NFHS.t60;$('tmo30').value=TMO_NFHS.t30;$('tmoOT').value=TMO_NFHS.ot}}
 // ---- Owner line + stat keeper ----
 const OWNER_LINE='Created and owned by Brad Conley · © 2026';

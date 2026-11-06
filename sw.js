@@ -1,7 +1,7 @@
 // West Ottawa Basketball Stats - offline service worker. Cache name is tied to the app build string (+ content hash).
 // Safe update flow: a new version installs in the background and WAITS (no skipWaiting, no clients.claim, no reload),
 // so a game in progress is never interrupted; it takes over the next time the app is fully closed and launched again.
-const CACHE='wo-panthers-stats-v1.0.7-2026-11-06-arena-clock-0b92f521';
+const CACHE='wo-panthers-stats-v1.0.8-2026-11-06-live-chrome-d9be2c88';
 const ASSETS=['./','index.html','manifest.webmanifest','icons/icon-192.png','icons/icon-512.png','icons/icon-maskable-512.png','icons/apple-touch-icon.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS.map(u=>new Request(u,{cache:'reload'})))))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith('wo-panthers-stats-')&&k!==CACHE).map(k=>caches.delete(k)))))});
