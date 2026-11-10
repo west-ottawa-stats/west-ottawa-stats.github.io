@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0d0d0d"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="WO Basketball"><link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0d0d0d"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="WO Basketball"><link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <title>West Ottawa Basketball Stat Tracker</title>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,Arial,sans-serif;background:#0d0d0d;color:#fff}
@@ -201,6 +201,91 @@ header .ts{display:none}
 /* v2.2.9 (2026-10-29): gold full-width divider between "Who's coming out?" and "Who's going in?" in the subs pickers (same gold as the border). Hidden anywhere outside a .subsWin window. */
 .subsDiv{display:none}
 #ftModal.subsWin .subsDiv{display:block;height:0;border:0;border-top:3px solid var(--subs-edge);border-radius:2px;margin:12px 0 0;width:100%}
+
+/* ---- app-feel (v1.0.10) ---- */
+:root{--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);--sal:env(safe-area-inset-left,0px);--sar:env(safe-area-inset-right,0px);--tabH:60px}
+body.afGame{--tabH:50px}
+html,body{overscroll-behavior:none;overscroll-behavior-y:none}
+html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html{scroll-padding-bottom:calc(68px + env(safe-area-inset-bottom,0px))}
+*{-webkit-tap-highlight-color:transparent}
+button,[role=button],[role=radio],[role=tab],label,header,#teamBar,#scorebug,#tabBar,#afUpdate,a{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+input,textarea,select,[contenteditable]{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
+button{touch-action:manipulation;transition:transform .08s ease-out}
+button:active:not(:disabled),button.afPress{transform:scale(.96)}
+body{padding-bottom:calc(var(--tabH) + var(--sab) + 8px);padding-left:var(--sal);padding-right:var(--sar)}
+.brand{padding-top:calc(10px + var(--sat))}
+@media(max-width:600px){.brand{padding-top:calc(4px + var(--sat))}}
+header#tabBar{position:fixed;left:0;right:0;bottom:0;z-index:45;display:flex;flex-wrap:nowrap;gap:2px;overflow:visible;margin:0;padding:4px calc(4px + var(--sar)) calc(4px + var(--sab)) calc(4px + var(--sal));background:#141414;border-top:2px solid #ffffff;box-shadow:0 -4px 16px rgba(0,0,0,.55)}
+header#tabBar button{flex:1 1 0;min-width:0;min-height:calc(var(--tabH) - 8px);padding:2px 0;margin:0;border:0;border-radius:12px;background:transparent;color:#a8a8a8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;font-weight:800;letter-spacing:.2px;box-shadow:none;line-height:1.1;cursor:pointer}
+header#tabBar .ti{display:flex;align-items:center;justify-content:center;width:46px;height:28px;border-radius:14px;transition:background-color .15s,color .15s}
+header#tabBar svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+header#tabBar button.on{background:transparent;color:#ffffff;box-shadow:none}
+header#tabBar button.on .ti{background:#ffffff;color:#0d0d0d}
+body.afGame header#tabBar button{font-size:10px;gap:1px}
+body.afGame header#tabBar .ti{width:40px;height:23px}
+body.afGame header#tabBar svg{width:19px;height:19px}
+#toast{bottom:calc(var(--tabH) + var(--sab) + 12px)!important}
+section.tabIn{animation:afTabIn .18s ease-out}
+@keyframes afTabIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.afSheet:not(.hide){align-items:flex-end!important;justify-content:center!important;padding:12px 0 0!important;animation:afFadeIn .18s ease-out}
+.afSheet>*:first-child{border-bottom-width:0!important;border-radius:18px 18px 0 0!important;padding-bottom:calc(14px + var(--sab))!important;animation:afSheetUp .2s cubic-bezier(.2,.8,.25,1)}
+.afFade:not(.hide){animation:afFadeIn .18s ease-out}
+@keyframes afFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes afSheetUp{from{transform:translateY(100%)}to{transform:none}}
+#afUpdate{position:fixed;left:50%;bottom:calc(var(--tabH) + var(--sab) + 10px);z-index:46;display:flex;width:min(420px,calc(100% - 24px));background:#ffffff;color:#0d0d0d;border-radius:14px;box-shadow:0 6px 22px rgba(0,0,0,.6);opacity:0;visibility:hidden;pointer-events:none;transform:translate(-50%,14px);transition:opacity .2s,transform .2s,visibility 0s .2s}
+#afUpdate.show{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,0);transition:opacity .2s,transform .2s}
+#afUpdate button{min-height:46px;background:transparent;color:#0d0d0d;border:0;border-radius:14px;font-size:15px;font-weight:900;padding:8px 12px;box-shadow:none}
+#afUpdGo{flex:1 1 auto;text-align:left}#afUpdGo small{display:block;font-size:11px;font-weight:700;opacity:.7}
+#afUpdX{flex:0 0 46px;border-left:1px solid rgba(0,0,0,.18)!important;border-radius:0 14px 14px 0!important}
+@media (prefers-reduced-motion:reduce){button{transition:none}button:active:not(:disabled),button.afPress{transform:none}section.tabIn,.afSheet:not(.hide),.afSheet>*:first-child,.afFade:not(.hide){animation:none!important}#afUpdate,#afUpdate.show,header#tabBar .ti{transition:none}}
+
+/* ---- home dashboard (v1.0.10) ---- */
+#home{padding:10px 12px 16px}
+body.afHome #teamBar{display:none!important}
+#hmHello{font-size:12px;font-weight:900;letter-spacing:.8px;color:#a8a8a8;text-transform:uppercase;margin:2px 2px 8px}
+#hmLvl{display:flex;gap:3px;background:#1c1c1c;border:2px solid #ffffff;border-radius:14px;padding:3px;margin:0 0 12px}
+#hmLvl button{flex:1 1 0;min-width:0;min-height:44px;padding:4px;margin:0;border:0;border-radius:10px;background:transparent;color:#d0d0d0;font-size:17px;font-weight:900;position:relative;box-shadow:none}
+#hmLvl button.on{background:#ffffff;color:#0d0d0d}
+#hmLvl button.live::after{content:'';position:absolute;top:6px;right:8px;width:8px;height:8px;border-radius:50%;background:#ff3b30}
+#hmResume{display:flex;align-items:center;gap:12px;width:100%;margin:0 0 12px;padding:10px 14px;min-height:66px;background:#0a7d2c;border:2px solid #b9ffcb;border-radius:16px;color:#fff;text-align:left}
+.hmDot{flex:0 0 12px;height:12px;border-radius:50%;background:#ff3b30;box-shadow:0 0 0 3px rgba(255,59,48,.35);animation:hmPulse 1.4s ease-in-out infinite}
+@keyframes hmPulse{50%{opacity:.35}}
+.hmRT{flex:1 1 auto;min-width:0}.hmRT b{display:block;font-size:12px;letter-spacing:.8px;text-transform:uppercase}.hmRT span{display:block;font-size:18px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.hmGoR{flex:0 0 auto;font-weight:900;font-size:17px;white-space:nowrap}
+.hmCard{background:#161616;border:1px solid #3a3a3a;border-radius:16px;padding:12px 14px;margin:0 0 12px}
+.hmK{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:#a8a8a8;margin:0 0 6px}
+.hmK a{color:#ffffff;text-decoration:none;font-size:13px;letter-spacing:.3px;padding:4px 0 4px 12px}
+.hmOpp{font-size:26px;font-weight:900;line-height:1.15;overflow-wrap:anywhere}
+.hmMeta{font-size:15px;color:#d0d0d0;margin-top:3px;line-height:1.35}
+.hmBig{display:block;width:100%;margin-top:12px;min-height:60px;font-size:22px;font-weight:900;border-color:#b9ffcb;border-radius:14px}
+.hmLink{display:block;text-align:center;color:#ffffff;font-size:16px;font-weight:700;padding:2px 0 14px;text-decoration:underline;text-underline-offset:3px}
+.hmStats{display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:8px}
+.hmS{background:#0d0d0d;border:1px solid #2e2e2e;border-radius:12px;padding:8px 6px;text-align:center;min-width:0}
+.hmS b{display:block;font-size:24px;font-weight:900;line-height:1.15;font-variant-numeric:tabular-nums;white-space:nowrap}
+.hmS small{display:block;font-size:11.5px;color:#a8a8a8;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.hmS b.w{color:#7dffa8}.hmS b.l{color:#ff8a8a}
+.hmNote{font-size:12px;color:#a8a8a8;margin-top:6px}
+.hmG{display:flex;align-items:center;gap:10px;width:100%;min-height:58px;padding:8px 2px;margin:0;border:0;border-top:1px solid #2e2e2e;border-radius:0;background:transparent;color:#fff;text-align:left;font-size:16px;box-shadow:none}
+.hmG:first-of-type{border-top:0}
+.hmR{flex:0 0 30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;background:#3a3a3a}
+.hmR.w{background:#0a7d2c}.hmR.l{background:#b00020}
+.hmGT{flex:1 1 auto;min-width:0}.hmGT b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:17px}.hmGT small{display:block;color:#a8a8a8;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hmGT .hmTest{display:inline-block;background:#c76a00;color:#fff;border-radius:5px;padding:0 5px;font-size:11px;font-weight:900;margin-left:6px;vertical-align:2px}
+.hmGS{flex:0 0 auto;font-weight:900;font-size:18px;font-variant-numeric:tabular-nums}
+.hmChev{flex:0 0 auto;color:#777;font-size:22px;line-height:1}
+.hmEmpty{margin:2px 0;color:#cfcfcf;font-size:15px;line-height:1.35}
+@media (prefers-reduced-motion:reduce){.hmDot{animation:none}}
+/* ---- sticky-clock (v1.0.10): scoreboard pinned under the notch during a live game ---- */
+body.afGame #scorebug{position:-webkit-sticky;position:sticky;top:var(--sat);z-index:6}
+body.afStuck::after{content:'';position:fixed;left:0;right:0;top:0;height:var(--sat);background:#0d0d0d;z-index:44;pointer-events:none}
+body.afStuck #scorebug{box-shadow:0 0 0 6px #0d0d0d,0 10px 16px 2px rgba(0,0,0,.75)}
+/* v1.0.10: no condensed layout — the pinned scoreboard is the same full-size scoreboard */
+
+/* ---- sticky-fix (v1.0.10): Start/Stop row pins right under the pinned scoreboard, so it is never covered ---- */
+body.afGame #toolbar{position:-webkit-sticky;position:sticky;top:calc(var(--sat) + var(--sbH,85px) + 6px);z-index:5}
+body.afBarStuck #toolbar{background:#0d0d0d;box-shadow:0 0 0 6px #0d0d0d,0 10px 16px 2px rgba(0,0,0,.75)}
+body.afBarStuck #scorebug{box-shadow:0 0 0 6px #0d0d0d}
 </style><script>/* v2.2.2 Mac/iPad safety net — plain ES5 so it runs even on a browser too old for the main app script. Shows friendly banners; never changes app behavior. */
 (function(){var W=window,D=document,errs=[],shown=0;
 function bld(){try{return typeof APP_BUILD!=='undefined'?APP_BUILD:'v2.2.2 · 2026-10-28 · Mac/iPad safety'}catch(e){return 'v2.2.2 · 2026-10-28 · Mac/iPad safety'}}
@@ -266,13 +351,20 @@ try{var s=real(),pk='__wo_bb_probe__';s.setItem(pk,'1');if(s.getItem(pk)!=='1')t
 
 <div class="brand">🏀 WEST OTTAWA <span id="brandTeam">VARSITY</span> BASKETBALL 🏀</div>
 <div id="teamBar" role="radiogroup" aria-label="Team (each team keeps its own roster, games, season and settings)"><button data-team="varsity" role="radio">Varsity</button><button data-team="jv" role="radio">JV</button><button data-team="freshman" role="radio">Freshman</button></div>
-<header><button data-tab="game" class="on">Game</button><button data-tab="roster">Roster</button><button data-tab="box" aria-label="Box Score"><span class="tl">Box Score</span><span class="ts">Box</span></button><button data-tab="past" aria-label="Past Games"><span class="tl">Past Games</span><span class="ts">Past</span></button><button data-tab="pbp" aria-label="Play-by-Play"><span class="tl">Play-by-Play</span><span class="ts">Plays</span></button><button data-tab="season">Season</button></header>
+<header id="tabBar" role="tablist" aria-label="Screens"><button data-tab="home" role="tab" aria-label="Home" aria-selected="true" class="on"><span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.8V20h13V9.8"/><path d="M10 20v-5.5h4V20"/></svg></span><span class="tbl">Home</span></button><button data-tab="game" role="tab" aria-label="Game" aria-selected="false"><span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.7 5.7c3.4 3.2 3.4 9.4 0 12.6M18.3 5.7c-3.4 3.2-3.4 9.4 0 12.6"/></svg></span><span class="tbl">Game</span></button><button data-tab="roster" role="tab" aria-label="Roster" aria-selected="false"><span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c0-3.3 2.7-5.6 6-5.6s6 2.3 6 5.6"/><circle cx="17" cy="9" r="2.4"/><path d="M16.2 13.7c2.7.2 4.8 2.3 4.8 5"/></svg></span><span class="tbl">Roster</span></button><button data-tab="box" role="tab" aria-label="Box Score" aria-selected="false"><span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14.5h18M9 4v16"/></svg></span><span class="tbl">Box</span></button><button data-tab="past" role="tab" aria-label="Past Games" aria-selected="false"><span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3 4.5v4h4"/><path d="M12 7.5V12l3 2"/></svg></span><span class="tbl">Past</span></button><button data-tab="pbp" role="tab" aria-label="Play-by-Play" aria-selected="false"><span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h12M9 12h12M9 18h12"/><path d="M4 6h.01M4 12h.01M4 18h.01" stroke-width="3"/></svg></span><span class="tbl">Plays</span></button><button data-tab="season" role="tab" aria-label="Season" aria-selected="false"><span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V11M11 20V5M17 20v-7M3 20h18"/></svg></span><span class="tbl">Season</span></button></header>
+<section id="home" aria-label="Home"><div id="hmHello"></div>
+<div id="hmLvl" role="radiogroup" aria-label="Level (each level keeps its own roster, games and season)"><button type="button" data-hl="varsity" role="radio">Varsity</button><button type="button" data-hl="jv" role="radio">JV</button><button type="button" data-hl="freshman" role="radio">Freshman</button></div>
+<button type="button" id="hmResume" class="hide"></button>
+<div class="hmCard" id="hmNext"></div>
+<a href="#" id="hmNew" class="hmLink">New game (not on schedule) ›</a>
+<div class="hmCard" id="hmSnap"></div>
+<div class="hmCard" id="hmRecent"></div></section>
 <section id="roster" class="hide"><h2>Roster</h2>
 <input id="rNum" placeholder="#" style="width:70px" inputmode="numeric"><input id="rName" placeholder="Player name"><input id="rClass" placeholder="Class (Sr/Jr…)" list="classList" style="width:150px"><datalist id="classList"><option value="Sr"><option value="Jr"><option value="So"><option value="Fr"></datalist><input id="rPos" placeholder="Position (opt.)" style="width:150px"><button id="rAdd" class="g">Add / Save</button>
 <div style="margin:6px 0"><button id="rImport" class="b">📥 Import Roster</button><input type="file" id="rImportFile" accept=".json,.csv,application/json,text/csv,text/plain" class="hide"> <small style="opacity:.8">NFHS roster file (.json), CSV (jersey,name,class,pos) or a tracker backup</small></div>
 <div id="rList"></div><div id="rInact"></div>
 <h2>Clock Settings</h2><div id="buildTag" style="font-size:13px;opacity:.75;margin:-4px 0 8px"></div><label>Quarter length (M:SS) <input id="setQ" style="width:100px"></label> <label>OT length (M:SS) <input id="setOT" style="width:100px"></label> <label style="display:block;margin:8px 0;font-size:18px"><input type="checkbox" id="setZone" checked style="width:26px;height:26px;vertical-align:middle"> Ask for shot location</label><label style="display:block;margin:8px 0;font-size:18px"><input type="checkbox" id="setAst" style="width:26px;height:26px;vertical-align:middle"> Ask for assist after made FG</label><label style="display:block;margin:8px 0;font-size:18px"><input type="checkbox" id="setReb" style="width:26px;height:26px;vertical-align:middle"> Ask who got the rebound after every miss (both teams)</label><label style="display:block;margin:8px 0;font-size:18px"><input type="checkbox" id="setFtSubs" style="width:26px;height:26px;vertical-align:middle"> Ask about subs before the last free throw</label><label style="display:block;margin:8px 0;font-size:18px"><input type="checkbox" id="setToSubs" style="width:26px;height:26px;vertical-align:middle"> Ask about subs after a timeout</label><label style="display:block;margin:8px 0;font-size:18px"><input type="checkbox" id="setQLineup" style="width:26px;height:26px;vertical-align:middle"> Ask who's on the floor between quarters</label><label style="display:block;margin:8px 0;font-size:18px"><input type="checkbox" id="setOppAst" style="width:26px;height:26px;vertical-align:middle"> Ask about opponent assists (after OPP FG MAKE)</label><div style="margin:8px 0;font-size:18px">Foul warning at <input id="setFl1" type="number" min="1" max="9" style="width:70px"> fouls in 1st half, <input id="setFl2" type="number" min="1" max="9" style="width:70px"> in 2nd half/OT; foul out at <input id="setFout" type="number" min="1" max="9" style="width:70px"></div><label style="display:block;margin:8px 0;font-size:18px"><input type="checkbox" id="setFoulPause" checked style="width:26px;height:26px;vertical-align:middle"> Pause clock on fouls</label><label style="display:block;margin:8px 0;font-size:18px"><input type="checkbox" id="setFtStop" checked style="width:26px;height:26px;vertical-align:middle"> Stop clock on free throws</label><label style="display:block;margin:8px 0;font-size:18px"><input type="checkbox" id="setReq5" checked style="width:26px;height:26px;vertical-align:middle"> Require 5 on court to run clock <small style="opacity:.8">(turn off for shorthanded games)</small></label><label style="display:block;margin:8px 0;font-size:18px">Report email <input id="setEmail" type="email" style="width:min(420px,100%)"></label><button id="saveSet" class="g">Save Settings</button></section>
-<section id="game">
+<section id="game" class="hide">
 <div id="newGame"><h2>New Game</h2><input id="opp" placeholder="Opponent"><input id="gdate" type="date"><input id="venue" placeholder="Venue (optional)"><label for="keeper" style="display:block;font-size:14px;font-weight:bold;color:#ffffff;margin:6px 0 -2px">Stats kept by <small style="font-weight:normal;opacity:.85;color:#fff">(optional)</small></label><input id="keeper" placeholder="Name of the person keeping stats" autocomplete="name"><select id="homeAway" class="sel" style="font-size:18px;padding:10px;margin:4px 0"><option value="home">West Ottawa = Home</option><option value="away">West Ottawa = Away</option></select><label style="display:inline-flex;align-items:center;gap:6px;font-size:16px;margin:4px 8px 4px 2px"><input type="checkbox" id="testGame" style="width:22px;height:22px"> Test game</label><div id="tmoSet"><b>Timeouts per team:</b><label>Full <input id="tmo60" type="number" min="0" max="9" inputmode="numeric" value="3"></label><label>30-sec <input id="tmo30" type="number" min="0" max="9" inputmode="numeric" value="2"></label><label>+Full per OT <input id="tmoOT" type="number" min="0" max="9" inputmode="numeric" value="1"></label><span class="nf">NFHS default: three full + two 30-second in regulation, +1 full per overtime; unused timeouts carry over. <a href="#" id="tmoNfhs" style="color:#ffffff">Reset to NFHS</a></span></div><button id="startGame" class="g">Start New Game</button></div>
 <div id="live" class="hide">
 <h2 id="title"></h2>
@@ -766,7 +858,7 @@ const STATS=[['2PT Make','fg2m','g'],['2PT Miss','fg2x','r'],['3PT Make','fg3m',
 const load=(k,d)=>{try{return JSON.parse(LS.getItem(k))??d}catch(e){return d}};
 const BOOL_SET=['askAst','askZone','req5','ftStop','foulPause','askReb'];
 function normSettings(o){o=o&&typeof o==='object'&&!Array.isArray(o)?o:{};if(!(o.qLen>0))o.qLen=480;if(!(o.otLen>0))o.otLen=240;BOOL_SET.forEach(k=>{const v=o[k];o[k]=!(v===false||v==='false'||v===0||v==='0'||v==='off')});return o}
-const APP_VERSION='v1.0.9',APP_BUILD=APP_VERSION+' · 2026-11-06 · line-weight';
+const APP_VERSION='v1.0.10',APP_BUILD=APP_VERSION+' · 2026-11-10 · home';
 // ---- v2.2 teams: Varsity / JV / Freshman. Each team has its own storage slot: wo_bb_roster_<id>, wo_bb_game_<id>, wo_bb_past_<id>, wo_bb_settings_<id>, wo_bb_keeper_<id>;
 // wo_bb_team = last selected team. Migration (once, idempotent): the old unsuffixed v2.1 keys are COPIED to the Varsity slot and verified; the old keys are left untouched as a backup and never written again.
 const TEAMS=[['varsity','Varsity'],['jv','JV'],['freshman','Freshman']],TEAM_IDS=TEAMS.map(t=>t[0]),TEAM_KEYS=['wo_bb_roster','wo_bb_game','wo_bb_past','wo_bb_settings','wo_bb_keeper'],TEAM_SEL='wo_bb_team',TEAM_MIG='wo_bb_teams_migrated';
@@ -787,7 +879,7 @@ const blank=()=>{const s={sec:0};STATS.forEach(x=>s[x[1]]=0);return s};
 const fmt=s=>{s=Math.floor((+s||0)+1e-3);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}; // +1ms guards float drift (89.99999 s is 1:30, not 1:29)
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function msg(t){$('msg').textContent=t}
-document.querySelectorAll('header button').forEach(b=>b.onclick=()=>{document.querySelectorAll('header button').forEach(x=>x.classList.toggle('on',x===b));['game','roster','box','past','pbp','season'].forEach(s=>$(s).classList.toggle('hide',s!==b.dataset.tab));render()});
+document.querySelectorAll('header button').forEach(b=>b.onclick=()=>{document.querySelectorAll('header button').forEach(x=>x.classList.toggle('on',x===b));['home','game','roster','box','past','pbp','season'].forEach(s=>$(s).classList.toggle('hide',s!==b.dataset.tab));render()});
 // roster
 $('rAdd').onclick=()=>{const num=$('rNum').value.trim(),name=$('rName').value.trim(),cls=$('rClass').value.trim(),pos=$('rPos').value.trim();if(!name)return;
  if(editIdx>=0){Object.assign(roster[editIdx],{num,name,cls,pos});if(game){const p=game.players.find(p=>p.id===roster[editIdx].id);if(p)Object.assign(p,{num,name,cls,pos})}editIdx=-1}
@@ -803,7 +895,7 @@ function localDate(d=new Date()){return`${d.getFullYear()}-${String(d.getMonth()
 $('gdate').value=localDate();
 $('startGame').onclick=()=>{if(!roster.some(p=>!p.inactive)){alert(roster.length?'All roster players are inactive — reactivate players on the Roster tab first.':'Add players to the roster first.');return}
  if(game){yesNo('Discard current game?',{danger:1,sub:'The game in progress is NOT saved to Past Games.'},startNewGame);return}startNewGame()};
-function startNewGame(){
+function startNewGame(){if(window.AF&&AF.go&&AF.tab()!=='game')AF.go('game',true); // v1.0.10: a new game always lands on Game (e.g. from Home)
  game={qLen:settings.qLen,otLen:settings.otLen,oppLive:true,oppStats:1,oppFouls:1,oppStl:1,...(settings.askOppAst!==false?{oppAst:1}:{}),oppTap:{},oppAdj:{},opp:$('opp').value.trim()||'Opponent',date:$('gdate').value,venue:$('venue').value.trim()||null,home:$('homeAway').value==='away'?'away':'home',test:!!$('testGame').checked,tmo:tmoFromSetup(),keeper:keeperFromSetup(),period:1,remain:perLen(1),running:false,log:[],subLog:[],seq:0,starters:null,players:roster.filter(p=>!p.inactive).map(p=>({id:p.id,num:p.num,name:p.name,cls:p.cls||'',pos:p.pos||'',court:false,s:blank()}))};sel=null;$('testGame').checked=false;save();render();stOpen();if(!game.keeper)alertMsg('👋 Tip: add who is keeping stats — Tools ▾ → Stats kept by (optional)')}
 const perLen=n=>n<=4?settings.qLen:settings.otLen;
 const pLbl=n=>n<=4?'Q'+n:'OT'+(n-4);
@@ -2198,13 +2290,14 @@ function updateLiveChrome(){const active=!!game,run=!!(game&&game.running);
   const tmo=$('tmoBtns');if(tmo)tmo.classList.toggle('hide',!active||run);
   const mode=$('mode');if(mode)mode.classList.toggle('hide',!active||run);
   const bar=$('toolbar');if(bar)bar.classList.toggle('liveRun',active&&run);
+  if(window.AF&&AF.sync)AF.sync(active,run);
 }
 function render(){renderTeam();recheckFoulBanner();renderSeason();renderPbp();renderMini();renderRoster();renderPast();renderBox();$('newGame').classList.toggle('hide',!!game);$('live').classList.toggle('hide',!game);
  if(game){$('title').textContent=`vs ${game.opp} — ${fmtDate(game.date)}${game.test?' (TEST)':''}`;{const st=stopIfShort();if(st!==false)alertMsg(`⏸ Clock stopped — only ${st} on court`)}renderBug();{const n=onCourtN(),oc=$('onCourt');oc.textContent=`ON COURT ${n}/5`;oc.classList.toggle('ok',n===5);oc.hidden=n===5;oc.parentNode.classList.toggle('ocShow',n!==5);oc.title=n===5?'5 on court':need5()?'Need 5 on court to run the clock':'Shorthanded allowed (setting)'}setClockFace(fmtClock(game.remain));$('period').textContent=pLbl(game.period);renderPerBtns();$('htBtn').classList.toggle('hide',!(game.period>=3||(game.period===2&&game.remain<=0)));$('htSbBtn').classList.toggle('hide',!(game.period>=3||(game.period===2&&game.remain<=0)));$('clockBtn').querySelector('.ci').textContent=game.running?'⏸':'▶';$('clockState').textContent=game.running?'CLOCK RUNNING':'CLOCK STOPPED';$('clockBtn').title=game.running?'Clock running — tap to stop':'Clock stopped — tap to start';$('clockBtn').className=game.running?'r':'g';
   {const kl=$('keeperLive');if(kl&&document.activeElement!==kl)kl.value=keeperOf(game)}
   $('mode').textContent='Subs';$('mode').classList.toggle('on',!!msSeq);
   const p=game.players.find(p=>p.id===sel);if(p&&!p.court&&!courtMode)sel=null;$('lineupMsg').classList.toggle('hide',game.players.some(x=>x.court));$('selName').textContent=p&&sel?`Selected: #${p.num} ${p.name}`:'No player selected';renderPlayers()}
- updateLiveChrome()}
+ updateLiveChrome();renderHome()}
 // ---- season ----
 let sView='tot',sSort={k:'PTS',d:-1};
 const keyOf=p=>p.id?'id:'+p.id:'nn:'+p.num+'|'+p.name;
@@ -2569,6 +2662,46 @@ let _rtSig='',_rtOther=null;function renderTeam(){if(!_rtOther){_rtOther={};TEAM
  document.querySelectorAll('#teamBar button').forEach(b=>{const on=b.dataset.team===curTeam;b.classList.toggle('on',on);b.setAttribute('aria-checked',String(on));b.classList.toggle('live',!!live(b.dataset.team));b.title=on?`${teamLbl(b.dataset.team)} (selected)`:`Switch to ${teamLbl(b.dataset.team)}`});
  $('sbUsName').innerHTML=`WEST OTTAWA<span class="sb-lvl">${esc(curTeam==='freshman'?'FR':U)}</span>`;$('sbUsName').title=`West Ottawa ${L}`;
  $('seasonH').textContent=`${L} Season Stats`;$('newSeason').textContent=`⚠ Start New ${L} Season…`;$('backup').textContent='Export Backup — all 3 teams (JSON)'}
+// ---- v1.0.10 Home dashboard: next game, level switcher (= the team picker, remembered in wo_bb_team), season snapshot, recent games, resume banner.
+// Uses only saved data for the selected level. West Ottawa has NO schedule in this build, so the next-game card shows "No schedule yet" (it reads a SCHED_DEF table only if a future build adds one).
+function hmSched(){try{if(typeof SCHED_DEF==='undefined'||!SCHED_DEF)return null;const L=SCHED_DEF[curTeam];return Array.isArray(L)?L:null}catch(e){return null}}
+function hmNext(){const L=hmSched();if(!L)return null;const t=localDate();const up=L.filter(r=>Array.isArray(r)&&/^\d{4}-\d{2}-\d{2}$/.test(r[0])&&r[0]>=t&&r[2]).sort((a,b)=>(a[0]+' '+(a[1]||'')).localeCompare(b[0]+' '+(b[1]||'')));const r=up[0];return r?{date:r[0],time:r[1]||'',opp:String(r[2]),ha:r[3]==='a'?'a':r[3]==='n'?'n':'h',venue:r[4]||''}:null}
+function hmTime(t){const m=/^(\d{1,2}):(\d{2})/.exec(t||'');if(!m)return'';let x=+m[1];const ap=x>=12?'PM':'AM';x=x%12||12;return x+':'+m[2]+' '+ap}
+function hmDay(d){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(d||'');if(!m)return String(d||'');const x=new Date(+m[1],+m[2]-1,+m[3]);return['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][x.getDay()]+', '+MONTHS[x.getMonth()].slice(0,3)+' '+x.getDate()}
+function hmGo(t){if(window.AF&&AF.go)AF.go(t);else{const b=document.querySelector('#tabBar button[data-tab="'+t+'"]');if(b)b.click()}scrollTo(0,0)}
+function hmStartNext(){const n=hmNext();hmGo('game');if(!n||game)return;$('opp').value=n.opp;$('gdate').value=n.date;$('venue').value=n.venue;$('homeAway').value=n.ha==='a'?'away':'home';$('startGame').click()}
+function hmRes(g){const p=pts(totals(g));if(g.oppScore==null)return{r:'',s:p+' pts'};return{r:p>g.oppScore?'W':p<g.oppScore?'L':'T',s:p+'-'+g.oppScore}}
+function hmVs(g){return(g.home==='away'?'at ':'vs ')+(g.opp||'Opponent')}
+function hmOther(){for(const id of TEAM_IDS){if(id===curTeam)continue;const g=load(tkey('wo_bb_game',id),null);if(g)return{id,g}}return null}
+function hmLiveTxt(g){return hmVs(g)+' · '+pLbl(g.period||1)+' · '+fmtClock(g.remain!=null?g.remain:perLen(g.period||1))+(g.running?' · clock running':'')}
+function hmOpenPast(i){hmGo('past');const d=$('pastList').querySelectorAll('details')[i];if(d){d.open=true;try{d.scrollIntoView({block:'start'})}catch(e){}}}
+function renderHome(){const el=$('home');if(!el)return;const on=!el.classList.contains('hide');document.body.classList.toggle('afHome',on);if(!on)return;
+ {const d=new Date();$('hmHello').textContent=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][d.getDay()]+', '+MONTHS[d.getMonth()]+' '+d.getDate()}
+ document.querySelectorAll('#hmLvl button').forEach(b=>{const id=b.dataset.hl,sel=id===curTeam;b.classList.toggle('on',sel);b.setAttribute('aria-checked',String(sel));b.classList.toggle('live',id===curTeam?!!game:teamHasGame(id))});
+ // resume banner: this level's game first, else another level's game (switches level, then lands on Game)
+ const rb=$('hmResume'),oth=game?null:hmOther();
+ if(game){rb.dataset.go='game';rb.innerHTML='<span class="hmDot" aria-hidden="true"></span><span class="hmRT"><b>'+esc(teamName())+' game in progress</b><span id="hmRS">'+esc(hmLiveTxt(game))+'</span></span><span class="hmGoR">Resume ›</span>'}
+ else if(oth){rb.dataset.go=oth.id;rb.innerHTML='<span class="hmDot" aria-hidden="true"></span><span class="hmRT"><b>'+esc(teamLbl(oth.id))+' game in progress</b><span>'+esc(hmLiveTxt(oth.g))+'</span></span><span class="hmGoR">Go to '+esc(teamLbl(oth.id))+' ›</span>'}
+ rb.classList.toggle('hide',!game&&!oth);
+ // next game
+ const n=hmNext(),btn=game?'<div class="hmMeta">Finish the game in progress before starting a new one.</div>':'<button type="button" id="hmStart" class="g hmBig">▶ Start Game</button>';
+ $('hmNext').innerHTML='<div class="hmK">Next game</div>'+(n?'<div class="hmOpp">'+esc((n.ha==='a'?'at ':'vs ')+n.opp)+'</div><div class="hmMeta">'+esc([hmDay(n.date),hmTime(n.time),n.ha==='a'?'Away':n.ha==='n'?'Neutral':'Home'].filter(Boolean).join(' · '))+'</div>'+(n.venue?'<div class="hmMeta">'+esc(n.venue)+'</div>':'')
+  :'<div class="hmOpp">No schedule yet</div>'+(game?'':'<div class="hmMeta">Tap Start Game to enter the opponent, date and home/away.</div>'))+btn;
+ {const s=$('hmStart');if(s)s.onclick=hmStartNext}
+ $('hmNew').classList.toggle('hide',!!game);
+ // season snapshot (same numbers as the Season tab)
+ const L=teamName();
+ if(!past.length)$('hmSnap').innerHTML='<div class="hmK">'+esc(L)+' season</div><p class="hmEmpty">No saved games yet. Your record and scoring show up here after you finish a game.</p>';
+ else{const S=season(),gp=past.length,ppg=(pts(S.team.s)/gp).toFixed(1),lg=past[0],lr=hmRes(lg);
+  $('hmSnap').innerHTML='<div class="hmK">'+esc(L)+' season</div><div class="hmStats"><div class="hmS"><b>'+(S.pag?S.w+'-'+S.l+(S.tie?'-'+S.tie:''):'—')+'</b><small>Record</small></div><div class="hmS"><b>'+ppg+'</b><small>Points / game</small></div><div class="hmS"><b class="'+(lr.r==='W'?'w':lr.r==='L'?'l':'')+'">'+esc((lr.r?lr.r+' ':'')+lr.s)+'</b><small>Last · '+esc(hmVs(lg))+'</small></div></div>'+(S.pag<gp?'<div class="hmNote">'+(gp-S.pag)+' game'+(gp-S.pag===1?'':'s')+' missing an opponent score (not in the record)</div>':'')}
+ // recent games
+ $('hmRecent').innerHTML='<div class="hmK">Recent games'+(past.length>3?'<a href="#" id="hmAll">All '+past.length+' ›</a>':'')+'</div>'+(past.length?past.slice(0,3).map((g,i)=>{const r=hmRes(g),k=keeperOf(g);return'<button type="button" class="hmG" data-hg="'+i+'"><span class="hmR '+(r.r==='W'?'w':r.r==='L'?'l':'')+'">'+(r.r||'–')+'</span><span class="hmGT"><b>'+esc(hmVs(g))+(g.test?'<span class="hmTest">TEST</span>':'')+'</b><small>'+esc(fmtDate(g.date)+(k?' · Stats: '+k:''))+'</small></span><span class="hmGS">'+esc(r.s)+'</span><span class="hmChev" aria-hidden="true">›</span></button>'}).join(''):'<p class="hmEmpty">Finished games are listed here. Tap one to open its box score.</p>');
+ $('hmRecent').querySelectorAll('[data-hg]').forEach(b=>b.onclick=()=>hmOpenPast(+b.dataset.hg));
+ {const a=$('hmAll');if(a)a.onclick=e=>{e.preventDefault();hmGo('past')}}}
+$('hmResume').onclick=()=>{const t=$('hmResume').dataset.go;if(t==='game'){if(game)hmGo('game')}else if(TEAM_IDS.includes(t))teamSwitch(t)};
+$('hmNew').onclick=e=>{e.preventDefault();hmGo('game')};
+document.querySelectorAll('#hmLvl button').forEach(b=>b.onclick=()=>teamSwitch(b.dataset.hl));
+setInterval(()=>{try{if(game&&game.running){const s=$('hmRS');if(s&&!$('home').classList.contains('hide'))s.textContent=hmLiveTxt(game)}}catch(e){}},1000);
 renderTeam();
 migrate();
 // reload / app-killed recovery: credit the time the clock kept running while the app was closed (through the normal tick, so 0:00 still ends the period)
@@ -2579,6 +2712,95 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 window.addEventListener('pagehide',()=>{if(game&&game.running){try{tick();save()}catch(e){console.error(e)}}});
 render();
 if(caughtUp)alertMsg(`⏱ Clock caught up ${(c=>`${Math.floor(c/60)}:${String(c%60).padStart(2,'0')}`)(Math.round(caughtUp.cr))} while the app was closed`+(caughtUp.end?` — end of ${pLbl(caughtUp.per)}`:'')+(caughtUp.long?' (closed over 30 min — check the clock)':''));
-</script><style>.pwaNote{margin:10px 0 4px;padding:9px 11px;border:1px solid #ffffff;border-left:5px solid #ffffff;border-radius:8px;background:rgba(255,255,255,.08);font-size:13px;line-height:1.4}</style><script>/* PWA (installed app): silent persistent-storage request + offline service worker. Never throws; does nothing on file:// or old browsers. */
+</script><div id="afUpdate" role="status" aria-live="polite"><button type="button" id="afUpdGo">⬆ Update ready — tap to reload<small id="afUpdVer"></small></button><button type="button" id="afUpdX" aria-label="Not now">✕</button></div>
+<script>/* v1.0.10 app-feel: bottom tabs, resume, haptics, sheets, update banner. Storage wo_bb_*. Installed app: a waiting service-worker update is offered through AF.watchSW (never while the clock runs). */
+(function(){'use strict';
+var KEY='wo_bb_lastTab',TABS=['home','game','roster','box','past','pbp','season'],D=document,B=D.body;
+var AF=window.AF={key:KEY};
+function store(){try{return window.LS||window.localStorage}catch(e){return null}}
+function g(){try{return typeof game!=='undefined'?game:null}catch(e){return null}}
+function running(){var x=g();return!!(x&&x.running)}
+var RM=window.matchMedia?matchMedia('(prefers-reduced-motion: reduce)'):null;
+AF.reduced=function(){return!!(RM&&RM.matches)};
+function btns(){return D.querySelectorAll('#tabBar button')}
+AF.tab=function(){var b=D.querySelector('#tabBar button.on');return b?b.dataset.tab:'game'};
+// 1+4+6: after the app's own tab handler runs: aria, remember the tab, short slide/fade
+Array.prototype.forEach.call(btns(),function(b){b.addEventListener('click',function(){var t=b.dataset.tab;
+ Array.prototype.forEach.call(btns(),function(x){x.setAttribute('aria-selected',String(x===b))});
+ try{var s=store();if(s)s.setItem(KEY,t)}catch(e){}try{sessionStorage.setItem(KEY,t)}catch(e){}
+ if(AF._quiet||AF.reduced())return;var sec=D.getElementById(t);if(!sec)return;
+ sec.classList.remove('tabIn');void sec.offsetWidth;sec.classList.add('tabIn');clearTimeout(sec._afT);sec._afT=setTimeout(function(){sec.classList.remove('tabIn')},260)})});
+AF.go=function(t,quiet){var b=D.querySelector('#tabBar button[data-tab="'+t+'"]');if(!b)return;AF._quiet=!!quiet;try{b.click()}finally{AF._quiet=false}};
+// 6: resume — live game always lands on Game; otherwise the last screen
+// v1.0.10: a fresh launch opens Home (Game when a game is active); a reload in the same session (team switch, refresh) keeps the last screen
+AF.resume=function(){var t='game';if(!g()){t='home';try{var v=sessionStorage.getItem(KEY);if(v&&TABS.indexOf(v)>=0)t=v}catch(e){}}if(t!==AF.tab())AF.go(t,true);return t};
+// live-chrome state -> compact tab bar + update-banner deferral
+AF.sync=function(active,run){B.classList.toggle('afGame',!!active);B.classList.toggle('afRun',!!run);if(AF.tickUpd)AF.tickUpd()};
+// 3: haptics on stat taps (Android); iOS has no navigator.vibrate, so this is silent there
+var HAP='#statBtns,#oppBtns,#fgModal,#ftModal,#rebModal,#stlModal,#astModal,#zoneModal,#tmoModal,#toModal,#moreModal,#clockBtn,#undo';
+AF.buzz=function(ms){try{if(typeof navigator.vibrate==='function')return navigator.vibrate(ms||12)}catch(e){}return false};
+D.addEventListener('click',function(e){var t=e.target;if(!t||!t.closest)return;var hit=t.closest(HAP);if(!hit)return;if(t.closest('button')||(hit.id==='zoneModal'&&t.closest('svg')))AF.buzz(12)},true);
+D.addEventListener('touchstart',function(){},{passive:true}); // lets iOS Safari apply :active (press scale)
+// 4: popups slide up as bottom sheets (look only; content/behavior unchanged)
+['tmoModal','ftModal','fgModal','ynModal','nsModal','ltoModal','toModal','stlModal','rebModal','astModal','repModal','htModal','zoneModal','pcModal','rimpModal','moreModal'].forEach(function(id){var m=D.getElementById(id);if(m)m.classList.add('afSheet')});
+(function(){var m=D.getElementById('stModal');if(m)m.classList.add('afFade')})();
+// 7: update banner. Compares the served page's APP_VERSION with the running one; never shows while the clock runs.
+var U=AF.upd={ready:false,ver:null,sw:null,last:0,busy:false,dismissed:false};
+function nums(v){return String(v||'').replace(/^v/i,'').split(/[^0-9]+/).filter(function(x){return x!==''}).map(Number)}
+AF.newer=function(a,b){var x=nums(a),y=nums(b),n=Math.max(x.length,y.length);for(var i=0;i<n;i++){var p=x[i]||0,q=y[i]||0;if(p!==q)return p>q}return false};
+var el=D.getElementById('afUpdate');
+AF.tickUpd=function(){var show=U.ready&&!U.dismissed&&!running();if(el)el.classList.toggle('show',show);var v=D.getElementById('afUpdVer');if(v)v.textContent=U.ver?('New version '+U.ver+' (running '+APP_VERSION+')'):'';return show};
+AF.check=function(force){
+ if(U.busy||U.ready)return Promise.resolve(U.ready);
+ if(!/^https?:$/.test(location.protocol)||navigator.onLine===false||typeof fetch!=='function')return Promise.resolve(false);
+ var now=Date.now();if(!force&&now-U.last<60000)return Promise.resolve(false);U.last=now;U.busy=true;
+ var url=location.href.split('#')[0].split('?')[0]+'?v='+now;
+ return fetch(url,{cache:'no-store'}).then(function(r){return r&&r.ok?r.text():''}).then(function(t){var m=/APP_VERSION='([^']+)'/.exec(t||'');
+  if(m&&AF.newer(m[1],APP_VERSION)){U.ready=true;U.ver=m[1];AF.tickUpd()}return U.ready}).catch(function(){return false}).then(function(v){U.busy=false;return v})};
+AF.apply=function(){if(running())return false;try{if(typeof save==='function'&&g())save()}catch(e){}
+ var w=U.sw;if(w&&navigator.serviceWorker){var done=false,go=function(){if(!done){done=true;location.reload()}};navigator.serviceWorker.addEventListener('controllerchange',go);try{w.postMessage({type:'SKIP_WAITING'})}catch(e){go()}setTimeout(go,3000);return true}
+ location.reload();return true};
+// Installed app (pwa): the service-worker registration calls AF.watchSW(registration); the sideline file never registers one, so this stays inert there.
+AF.watchSW=function(reg){if(!reg||!navigator.serviceWorker)return;var offer=function(w){U.sw=w;U.ready=true;U.ver=U.ver||'';AF.tickUpd()};
+ if(reg.waiting&&navigator.serviceWorker.controller)offer(reg.waiting);
+ if(reg.addEventListener)reg.addEventListener('updatefound',function(){var n=reg.installing;if(n)n.addEventListener('statechange',function(){if(n.state==='installed'&&navigator.serviceWorker.controller)offer(n)})})};
+D.getElementById('afUpdGo').addEventListener('click',function(){AF.apply()});
+D.getElementById('afUpdX').addEventListener('click',function(){U.dismissed=true;AF.tickUpd()});
+setInterval(AF.tickUpd,1000);
+D.addEventListener('visibilitychange',function(){if(D.visibilityState==='visible'){U.dismissed=false;AF.check()}});
+window.addEventListener('online',function(){AF.check(true)});
+// launch: land on the right screen under the splash (so it is there when the splash fades), then check for an update once the splash is gone
+var x=g();AF.sync(!!x,running());AF.resume();
+setTimeout(function(){AF.check(true)},window.__AF_CHECK_DELAY!=null?window.__AF_CHECK_DELAY:5000);
+})();</script><script>/* v1.0.10 sticky-clock (no condense): detects when the pinned scoreboard is stuck, for the notch strip + shadow only. No new tap actions. */
+(function(){'use strict';var D=document,B=D.body,sb=D.getElementById('scorebug');if(!sb||!window.AF)return;
+var sen=D.createElement('div');sen.id='sbSentinel';sen.setAttribute('aria-hidden','true');sen.style.cssText='height:0;margin:0;padding:0;pointer-events:none';sb.parentNode.insertBefore(sen,sb);
+var stuck=false,raf=0;
+function check(){raf=0;var on=B.classList.contains('afGame')&&sb.offsetParent!==null,st=false;
+ if(on){var top=parseFloat(getComputedStyle(sb).top)||0;st=sen.getBoundingClientRect().top<top-0.5}
+ if(st===stuck)return;stuck=st;
+ B.classList.toggle('afStuck',st)} // v1.0.10: state only (notch strip + shadow); nothing resizes, so no spacer
+function soon(){if(!raf)raf=(window.requestAnimationFrame||function(f){return setTimeout(f,16)})(check)}
+AF.stickyCheck=check;AF.isStuck=function(){return stuck};
+window.addEventListener('scroll',soon,{passive:true});window.addEventListener('resize',soon);
+var s0=AF.sync;AF.sync=function(a,r){s0.apply(this,arguments);if(!a&&stuck){stuck=false;B.classList.remove('afStuck')}soon()};
+D.addEventListener('visibilitychange',soon);check();
+})();</script><script>/* v1.0.10 sticky-fix: keeps the Start/Stop row's pin offset = the pinned scoreboard's live height; re-measures on scroll, resize, URL-bar (visualViewport) changes, tab switches and renders. */
+(function(){'use strict';var D=document,B=D.body,sb=D.getElementById('scorebug'),bar=D.getElementById('toolbar');if(!sb||!bar||!window.AF)return;var live=D.getElementById('live'),raf=0;
+function measure(){raf=0;try{if(AF.stickyCheck)AF.stickyCheck()}catch(e){}
+ var on=B.classList.contains('afGame')&&bar.offsetParent!==null;
+ var h=sb.offsetHeight;if(h>0)live.style.setProperty('--sbH',h+'px');
+ try{D.documentElement.style.scrollPaddingTop=on?((parseFloat(getComputedStyle(sb).top)||0)+h+6+bar.offsetHeight+8)+'px':''}catch(e){}
+ var st=false;if(on){var top=parseFloat(getComputedStyle(bar).top)||0;st=bar.getBoundingClientRect().top<=top+0.5&&B.classList.contains('afStuck')}
+ B.classList.toggle('afBarStuck',st)}
+function soon(){if(!raf)raf=(window.requestAnimationFrame||function(f){return setTimeout(f,16)})(measure)}
+AF.barMeasure=measure;
+window.addEventListener('scroll',soon,{passive:true});window.addEventListener('resize',soon);window.addEventListener('orientationchange',soon);
+if(window.visualViewport){visualViewport.addEventListener('resize',soon);visualViewport.addEventListener('scroll',soon)}
+D.addEventListener('visibilitychange',soon);window.addEventListener('pageshow',soon);
+Array.prototype.forEach.call(D.querySelectorAll('#tabBar button'),function(b){b.addEventListener('click',function(){measure();soon()})});
+var s0=AF.sync;AF.sync=function(){s0.apply(this,arguments);soon()};
+measure();
+})();</script><style>.pwaNote{margin:10px 0 4px;padding:9px 11px;border:1px solid #ffffff;border-left:5px solid #ffffff;border-radius:8px;background:rgba(255,255,255,.08);font-size:13px;line-height:1.4}</style><script>/* PWA (installed app): silent persistent-storage request + offline service worker. Never throws; does nothing on file:// or old browsers. */
 (function(){try{if(navigator.storage&&navigator.storage.persist&&navigator.storage.persisted)navigator.storage.persisted().then(function(p){if(!p)return navigator.storage.persist()}).then(function(){},function(){})}catch(e){}
-try{if(!('serviceWorker' in navigator)||!/^https?:$/.test(location.protocol))return;window.addEventListener('load',function(){try{navigator.serviceWorker.register('sw.js').then(function(){},function(){})}catch(e){}})}catch(e){}})();</script></body></html>
+try{if(!('serviceWorker' in navigator)||!/^https?:$/.test(location.protocol))return;window.addEventListener('load',function(){try{navigator.serviceWorker.register('sw.js').then(function(r){try{if(window.AF&&AF.watchSW)AF.watchSW(r)}catch(e){}},function(){})}catch(e){}})}catch(e){}})();</script></body></html>
