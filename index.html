@@ -84,7 +84,18 @@ body::before{content:'';position:fixed;top:0;right:0;bottom:0;left:0;background:
 .ftList button.warn.pk,.fsList button.warn.pk{background:#c76a00;color:#fff;border-color:#fff}
 .ftList button.out.pk,.fsList button.out.pk{background:#b00020;color:#fff;border-color:#fff}
 .ftList button .fb,.fsList button .fb{vertical-align:middle}.fsSw{margin:10px 0 0;font-size:15px;color:#b9ffcb;font-weight:700}
-.fsList button{position:relative}.fsList .pkn{position:absolute;top:3px;left:5px;min-width:20px;height:20px;line-height:20px;border-radius:10px;background:#121212;color:#ffffff;font-style:normal;font-size:13px;font-weight:900;text-align:center}
+.fsList button{position:relative}
+/* ---- alpha-subs names (v1.0.14): big first name, number + rest of name under it ---- */
+.fsList button.alp{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:center;align-content:center;column-gap:5px;row-gap:1px;padding:6px 8px;text-align:center;min-width:0;min-height:94px}
+.fsList button.alp .pnm{display:contents}
+.fsList button.alp .fnm{order:0;flex:0 0 100%;max-width:100%;font-size:25px;font-weight:900;line-height:1.12;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#stBody button.alp .fnm{font-size:28px}
+.fsList button.alp .pn{order:1;display:inline;font-size:16px;font-weight:800;line-height:1.2;letter-spacing:0;opacity:.9}
+.fsList button.alp .lnm{order:2;min-width:0;flex:0 1 auto;font-size:15px;font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.9}
+.fsList button.alp .lnm:empty{display:none}
+.fsList button.alp{letter-spacing:0;padding:22px 8px 6px} /* top room for the corner tag + pair circle, so nothing overlaps the first name */
+.fsList button.alp .fb{position:absolute;top:4px;right:5px;margin:0;line-height:18px;vertical-align:baseline;letter-spacing:0} /* corner tag: keeps the #number Lastname line centered */
+.fsList button.alp small{order:4;flex:0 0 100%}.fsList .pkn{position:absolute;top:3px;left:5px;min-width:20px;height:20px;line-height:20px;border-radius:10px;background:#121212;color:#ffffff;font-style:normal;font-size:13px;font-weight:900;text-align:center}
 .subHint{margin:10px 0 0;padding:6px 8px;border-radius:8px;background:#121212;border:1px solid #b5b5b5;color:#fff;font-size:16px;font-weight:800;text-align:center}.subHint.ok{border-color:#b9ffcb;color:#b9ffcb}.subHint.bad{border-color:#ffffff;color:#ffffff}
 #msDone{display:block;width:100%;margin-top:12px;min-height:60px;font-size:22px;font-weight:900;background:#0a7d2c;border-color:#b9ffcb;color:#fff}#msDone:disabled,#ftSubDone:disabled{opacity:.45;filter:grayscale(.6)} /* v2.2.1 multi-select subs */#ftSubDone{display:block;width:100%;margin-top:12px;min-height:60px;font-size:22px;font-weight:900;background:#0a7d2c;border-color:#b9ffcb;color:#fff}
 .ftMM{display:grid;grid-template-columns:1fr 1fr;gap:10px}.ftMM button{min-height:110px;font-size:36px;font-weight:900;border-width:3px}.fgV{display:grid;grid-template-columns:1fr 1fr;gap:10px}.fgV button{min-height:110px;font-size:38px;font-weight:900;border-width:3px;background:#2a2a2a;border-color:#b5b5b5;color:#fff}.fgV button small{display:block;font-size:15px;font-weight:700;opacity:.9;margin-top:2px}.fgV.mk button{background:#0a5d25;border-color:#b9ffcb}.fgV.ms button{background:#7a0018;border-color:#ffc2c2}.ftList button.pk{background:#ffffff;color:#141414;border-color:#fff}.ftList button.pk small{display:block;font-size:13px;font-weight:700}#fgBack.hide{visibility:hidden;display:inline-block!important}
@@ -108,6 +119,8 @@ body::before{content:'';position:fixed;top:0;right:0;bottom:0;left:0;background:
 #stCount.full b{color:#b9ffcb}
 #stBody button{min-height:84px}
 #stBody button .pn{font-size:34px}
+#stBody button.alp .pn{font-size:16px}
+#stBody button.alp{min-height:102px}
 #stGo{display:block;width:100%;margin-top:14px;min-height:68px;font-size:24px;font-weight:900;background:#0a7d2c;border:3px solid #b9ffcb;color:#fff;border-radius:12px}
 #stGo:disabled{background:#3a3a3a;border-color:#6a6a6a;color:#bdbdbd;opacity:.8}
 #stLinks{display:flex;justify-content:space-between;gap:10px;margin-top:10px}
@@ -881,7 +894,7 @@ const STATS=[['2PT Make','fg2m','g'],['2PT Miss','fg2x','r'],['3PT Make','fg3m',
 const load=(k,d)=>{try{return JSON.parse(LS.getItem(k))??d}catch(e){return d}};
 const BOOL_SET=['askAst','askZone','req5','ftStop','foulPause','askReb'];
 function normSettings(o){o=o&&typeof o==='object'&&!Array.isArray(o)?o:{};if(!(o.qLen>0))o.qLen=480;if(!(o.otLen>0))o.otLen=240;BOOL_SET.forEach(k=>{const v=o[k];o[k]=!(v===false||v==='false'||v===0||v==='0'||v==='off')});return o}
-const APP_VERSION='v1.0.13',APP_BUILD=APP_VERSION+' · 2026-11-18 · scrimmage-format';
+const APP_VERSION='v1.0.15',APP_BUILD=APP_VERSION+' · 2026-11-18 · out-label';
 // ---- v2.2 teams: Varsity / JV / Freshman. Each team has its own storage slot: wo_bb_roster_<id>, wo_bb_game_<id>, wo_bb_past_<id>, wo_bb_settings_<id>, wo_bb_keeper_<id>;
 // wo_bb_team = last selected team. Migration (once, idempotent): the old unsuffixed v2.1 keys are COPIED to the Varsity slot and verified; the old keys are left untouched as a backup and never written again.
 const TEAMS=[['varsity','Varsity'],['jv','JV'],['freshman','Freshman']],TEAM_IDS=TEAMS.map(t=>t[0]),TEAM_KEYS=['wo_bb_roster','wo_bb_game','wo_bb_past','wo_bb_settings','wo_bb_keeper'],TEAM_SEL='wo_bb_team',TEAM_MIG='wo_bb_teams_migrated';
@@ -1834,6 +1847,10 @@ function ftSubsDone(apply){const S=ftSeq;if(!S||!game)return;if(apply&&S.stage==
 // Tap any number of players under OUT and under IN (tap again to unselect); they stay highlighted with their pair number until Done.
 // Done is enabled only when OUT count = IN count (or, with fewer than 5 on court, extra INs that fill up to 5). On Done the picks are paired
 // in tap order (1st out ↔ 1st in, …) and applied once: tick minutes, flip court, logCourt at this quarter + clock — so minutes and +/- are right for every swap.
+/* v1.0.14 alpha-subs: Subs / Starting 5 lists by first name, then last name, then jersey (display order only) */
+function alphaP(a){const k=p=>{const t=String(p&&p.name||'').trim().toLowerCase().split(/\s+/);return[t[0]||'',t.slice(1).join(' ')]},nn=p=>{const n=parseInt(p&&p.num,10);return isNaN(n)?1e9:n};
+ return a.slice().sort((x,y)=>{const a1=k(x),b1=k(y);return a1[0].localeCompare(b1[0])||a1[1].localeCompare(b1[1])||(nn(x)-nn(y))||String(x.num||'').localeCompare(String(y.num||''))})}
+function alphaNm(p){const t=String(p&&p.name||'').trim().split(/\s+/);return`<span class="fnm">${esc(t[0]||'')}</span> <span class="lnm">${esc(t.slice(1).join(' '))}</span>`}
 function subsSel(S){S.outSel=S.outSel||[];S.inSel=S.inSel||[];return S}
 function subsOk(S,court){subsSel(S);const no=S.outSel.length,ni=S.inSel.length;return no===ni||(ni>no&&court-no+ni<=5)}
 function subsPairs(S,court){subsSel(S);const n=Math.min(S.outSel.length,S.inSel.length),P=[];for(let i=0;i<n;i++)P.push([S.outSel[i],S.inSel[i]]);
@@ -1842,14 +1859,14 @@ function subsHint(S,court,outOnly){const no=S.outSel.length,ni=S.inSel.length,fi
  if(!no&&!ni)t='tap players to pick';else if(subsOk(S,court))t=`ready — ${Math.max(no,ni)} sub${Math.max(no,ni)>1?'s':''}`+(fin<5?` · ${fin} on court`:'');
  else if(no>ni)t=`pick ${no-ni} more going in`+(outOnly?' (or use “Take … out without a sub”)':'');else t=`pick ${ni-no} more coming out`;
  return `Out ${no} · In ${ni} — ${t}`}
-function subsPmeta(p,extra){const fs=game?foulState(p,game.period):'',pos=String(p.pos||'').trim(),pf=p.s&&p.s.pf||0,fl=(pf===1?'1 foul':pf+' fouls')+(fs==='out'?' OUT':'');
- const bits=[pos?esc(pos):'',fl].filter(Boolean);if(extra)bits.push(esc(extra));
+function subsPmeta(p,extra){const fs=game?foulState(p,game.period):'',pos=String(p.pos||'').trim(),pf=p.s&&p.s.pf||0,fl=(pf===1?'1 foul':pf+' fouls')+(fs==='out'?' · fouled out':''); /* out-label: "5 fouls · fouled out" */
+ const bits=[pos&&fs!=='out'?esc(pos):'',fl].filter(Boolean);if(extra&&!(fs==='out'&&extra==='fouled out'))bits.push(esc(extra));
  return{cls:fs?' '+fs:'',fb:fs?`<span class="fb">${fs==='out'?'OUT':pf+'F'}</span>`:'',meta:bits.length?`<small>${bits.join(' · ')}</small>`:''}}
 function subsPickHtml(S,on,bench,o){subsSel(S);const pn=(a,id)=>{const i=a.indexOf(id);return i<0?'':`<i class="pkn">${i+1}</i>`},ok=subsOk(S,on.length),no=S.outSel.length,ni=S.inSel.length;
  const extra=o.outOnly&&no>ni?S.outSel.slice(ni).map(id=>game.players.find(p=>p.id===id)).filter(Boolean):[];
- return `<div class="fsH">Who's coming out?${o.sh?' <small>(shooter stays in)</small>':''}</div><div class="ftList fsList">${on.map(p=>{const M=subsPmeta(p,p.id===o.sh?'shooting':'');return`<button class="b${S.outSel.includes(p.id)?' pk':''}${M.cls}" data-fso="${esc(p.id)}" ${p.id===o.sh?'disabled':''}>${pn(S.outSel,p.id)}<b class="pn">#${esc(p.num)}</b> <span class="pnm">${esc(p.name)}${M.fb}</span>${M.meta}</button>`}).join('')||(o.emptyOn||'<p>Nobody on court</p>')}</div>`+
+ return `<div class="fsH">Who's coming out?${o.sh?' <small>(shooter stays in)</small>':''}</div><div class="ftList fsList">${alphaP(on).map(p=>{const M=subsPmeta(p,p.id===o.sh?'shooting':'');return`<button class="b alp${S.outSel.includes(p.id)?' pk':''}${M.cls}" data-fso="${esc(p.id)}" ${p.id===o.sh?'disabled':''}>${pn(S.outSel,p.id)}<b class="pn">#${esc(p.num)}</b> <span class="pnm">${alphaNm(p)}${M.fb}</span>${M.meta}</button>`}).join('')||(o.emptyOn||'<p>Nobody on court</p>')}</div>`+
   (extra.length?`<button id="msOutOnly" class="ftLink">Take ${extra.map(p=>'#'+esc(p.num)).join(', ')} out without a sub</button>`:'')+
-  `<hr class="subsDiv" aria-hidden="true"><div class="fsH">Who's going in?</div><div class="ftList fsList">${bench.map(p=>{const M=subsPmeta(p);return`<button class="b${S.inSel.includes(p.id)?' pk':''}${M.cls}" data-fsi="${esc(p.id)}">${pn(S.inSel,p.id)}<b class="pn">#${esc(p.num)}</b> <span class="pnm">${esc(p.name)}${M.fb}</span>${M.meta}</button>`}).join('')||'<p>No one left on the bench</p>'}</div>`+
+  `<hr class="subsDiv" aria-hidden="true"><div class="fsH">Who's going in?</div><div class="ftList fsList">${alphaP(bench).map(p=>{const M=subsPmeta(p);return`<button class="b alp${S.inSel.includes(p.id)?' pk':''}${M.cls}" data-fsi="${esc(p.id)}">${pn(S.inSel,p.id)}<b class="pn">#${esc(p.num)}</b> <span class="pnm">${alphaNm(p)}${M.fb}</span>${M.meta}</button>`}).join('')||'<p>No one left on the bench</p>'}</div>`+
   `<div id="subHint" class="subHint${ok&&(no||ni)?' ok':''}${ok?'':' bad'}" aria-live="polite">${esc(subsHint(S,on.length,o.outOnly))}</div>`+
   (S.swaps&&S.swaps.length?`<div class="fsSw">✓ ${S.swaps.map(w=>esc(w)).join(' · ')}</div>`:'')+`<button id="${o.doneId}" class="subDone"${ok?'':' disabled'}>${o.doneLbl}</button>`}
 function subsBind(S,rer){subsSel(S);const tg=(a,id)=>{const i=a.indexOf(id);if(i<0)a.push(id);else a.splice(i,1)};
@@ -1877,7 +1894,7 @@ function stRender(){if(!stPick||!game)return;const n=stPick.length,pl=game.playe
  $('stModal').classList.toggle('subsWin',ql);$('stTitle').textContent=ql?"Who's on the floor?":"Who's the Starting 5?";
  $('stSub').textContent=ql?`Start of ${pLbl(game.period)} · ${fmtClock(game.remain)} · same five? just tap Confirm`:`${game.home==='away'?'at ':'vs '}${game.opp} · tap 5 players · ${pl.length} active`;
  $('stCount').innerHTML=`<b>${n}</b> of 5`;$('stCount').classList.toggle('full',n===5);
- $('stBody').innerHTML=pl.map(p=>{const M=subsPmeta(p,out(p)?'fouled out':'');return`<button class="b${stPick.includes(p.id)?' pk':''}${M.cls}" data-stp="${esc(p.id)}" aria-pressed="${stPick.includes(p.id)}"${out(p)?' disabled':''}><b class="pn">#${esc(p.num)}</b> <span class="pnm">${esc(p.name)}${M.fb}</span>${M.meta}</button>`}).join('');
+ $('stBody').innerHTML=alphaP(pl).map(p=>{const M=subsPmeta(p,out(p)?'fouled out':'');return`<button class="b alp${stPick.includes(p.id)?' pk':''}${M.cls}" data-stp="${esc(p.id)}" aria-pressed="${stPick.includes(p.id)}"${out(p)?' disabled':''}><b class="pn">#${esc(p.num)}</b> <span class="pnm">${alphaNm(p)}${M.fb}</span>${M.meta}</button>`}).join('');
  $('stGo').textContent=ql?'Confirm these 5':'Start with these 5';$('stSkip').classList.toggle('hide',!ql);$('stCancel').classList.toggle('hide',ql); // Starting 5: no Skip — the game never starts with nobody on court
  $('stGo').disabled=n!==5;$('stFew').disabled=!(n>0&&n<5);$('stFew').classList.toggle('hide',pl.length>=5&&n===5);
  $('stBody').querySelectorAll('[data-stp]').forEach(b=>b.onclick=e=>{e.stopPropagation();const id=b.dataset.stp,i=stPick.indexOf(id);if(i>=0)stPick.splice(i,1);else if(stPick.length<5)stPick.push(id);else{msg('Already 5 — tap one to take him off first');return}stRender()})}
